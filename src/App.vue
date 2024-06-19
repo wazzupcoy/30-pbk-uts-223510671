@@ -1,53 +1,79 @@
 <template>
-  <div>
-    <header>
-      <nav>
-        <ul>
-          <li @click="selectedTab = 'Todos'" :class="{ active: selectedTab === 'Todos' }">Todos</li>
-          <li @click="selectedTab = 'Post'" :class="{ active: selectedTab === 'Post' }">Post</li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <Todos v-if="selectedTab === 'Todos'" />
-      <Posts v-else-if="selectedTab === 'Post'" />
-    </main>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated class="header">
+      <q-toolbar>
+        <q-toolbar-title class="header-title">UAS PBK HAN</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+    <q-page-container>
+      <div class="button-container">
+        <q-btn-group push>
+          <q-btn flat label="Todos" @click="navigateTo('/todos')" class="custom-button" />
+          <q-btn flat label="Post" @click="navigateTo('/post')" class="custom-button" />
+          <q-btn flat label="Albums" @click="navigateTo('/albums')" class="custom-button" />
+        </q-btn-group>
+      </div>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
-import Todos from './components/Todos.vue'
-import Posts from './components/Post.vue'
-
 export default {
-  components: {
-    Todos,
-    Posts
-  },
-  data() {
-    return {
-      selectedTab: 'Todos'
+  name: 'App',
+  methods: {
+    navigateTo(route) {
+      this.$router.push(route)
     }
   }
 }
 </script>
 
-<style scoped>
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
+<style>
+.header {
+  background-color: black;
+  color: white;
 }
-nav ul {
-  list-style-type: none;
-  padding: 0;
+
+.header-title {
+  text-align: center;
+  width: 100%;
 }
-nav ul li {
-  display: inline;
-  margin-right: 10px;
-  cursor: pointer;
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
-nav ul li.active {
+
+.custom-button {
+  background: linear-gradient(45deg, #42a5f5, #478ed1) !important;
+  color: white !important;
+  border: none;
+  border-radius: 8px;
+  margin: 0 5px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
   font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.custom-button:hover {
+  background: linear-gradient(45deg, #478ed1, #42a5f5) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.custom-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.q-page-container {
+  background-color: #333;
 }
 </style>
